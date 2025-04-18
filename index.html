@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #87CEEB, #E0F7FA, #B3E5FC);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .search-box input {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            width: 70%;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 0.8rem 1.5rem;
+            margin-left: 1rem;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-box button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .weather-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .location {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .location h2 {
+            font-size: 2rem;
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .location p {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin: 0.5rem 0 0;
+        }
+
+        .current-weather {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .temperature {
+            text-align: center;
+        }
+
+        .temperature .main-temp {
+            font-size: 4rem;
+            font-weight: 300;
+            margin: 0;
+            color: #3498db;
+        }
+
+        .temperature .feels-like {
+            font-size: 1rem;
+            color: #7f8c8d;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-item {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .detail-item h3 {
+            margin: 0 0 0.5rem;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        .detail-item p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .forecast {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .forecast-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            margin: 0 0.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .forecast-item:first-child {
+            margin-left: 0;
+        }
+
+        .forecast-item:last-child {
+            margin-right: 0;
+        }
+
+        .forecast-item h3 {
+            margin: 0 0 0.5rem;
+            color: #3498db;
+        }
+
+        .forecast-item p {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .rain-prediction {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .rain-yes {
+            background-color: rgba(41, 128, 185, 0.2);
+            color: #2980b9;
+        }
+
+        .rain-no {
+            background-color: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+
+        .error {
+            color: #e74c3c;
+            background-color: rgba(231, 76, 60, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .current-weather {
+                flex-direction: column;
+            }
+            
+            .forecast {
+                flex-direction: column;
+            }
+            
+            .forecast-item {
+                margin: 0.5rem 0;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Weather Prediction</h1>
+            <p>Get current weather and future predictions for any city</p>
+        </div>
+
+        <form method="POST" class="search-box">
+            <input type="text" name="city" placeholder="Enter city name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if weather %}
+        <div class="weather-card">
+            <div class="location">
+                <h2>{{ weather.city }}</h2>
+                <p>{{ weather.country }}</p>
+            </div>
+
+            <div class="current-weather">
+                <div class="temperature">
+                    <p class="main-temp">{{ weather.current_temp }}°C</p>
+                    <p class="feels-like">Feels like {{ weather.feels_like }}°C</p>
+                </div>
+
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <h3>Min Temp</h3>
+                        <p>{{ weather.temp_min }}°C</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Max Temp</h3>
+                        <p>{{ weather.temp_max }}°C</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Humidity</h3>
+                        <p>{{ weather.humidity }}%</p>
+                    </div>
+                    <div class="detail-item">
+                        <h3>Condition</h3>
+                        <p>{{ weather.description }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rain-prediction {% if weather.rain_prediction == 'Yes' %}rain-yes{% else %}rain-no{% endif %}">
+                Rain Prediction: {{ weather.rain_prediction }}
+            </div>
+
+            <h3 style="text-align: center; margin-top: 2rem;">Temperature Forecast</h3>
+            <div class="forecast">
+                {% for time, temp in weather.future_temp %}
+                <div class="forecast-item">
+                    <h3>{{ time }}</h3>
+                    <p>{{ temp }}°C</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h3 style="text-align: center; margin-top: 2rem;">Humidity Forecast</h3>
+            <div class="forecast">
+                {% for time, humidity in weather.future_humidity %}
+                <div class="forecast-item">
+                    <h3>{{ time }}</h3>
+                    <p>{{ humidity }}%</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+
