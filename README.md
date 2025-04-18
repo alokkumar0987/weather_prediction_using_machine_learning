@@ -28,5 +28,10 @@ Users can:
 - *Data Handling:* Pandas, NumPy
 - *IDE:* Jupyter Notebook (for model development)
 
+- *set API KEY
+- WEATHER_API_KEY=your_api_key_here
+
+  
+
 
 
