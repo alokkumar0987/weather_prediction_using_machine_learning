@@ -31,6 +31,9 @@ Users can:
 - *set API KEY
 - WEATHER_API_KEY=your_api_key_here
 
+- ## Run the code
+- python weather.py
+
   
 
 
